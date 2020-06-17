@@ -30,7 +30,7 @@ def run_local(alert_mode = False):
         scores = []
         for idx, vector in enumerate(feature_vectors):
             score = frame_predictor.get_inference_score(vector)
-            if score < frame_predictor.threshold:
+            if score > frame_predictor.threshold:
                 scores.append(score)
                 c1, l1, c2, l2 = bounding_boxes[idx]
                 boxes.append([c1, l1, c2, l2])

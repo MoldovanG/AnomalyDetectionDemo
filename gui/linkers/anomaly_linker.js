@@ -4,6 +4,7 @@ var path = require("path")
 function run_local() {
 
   var alert_mode = document.getElementById("alert_checkbox").value
+  document.getElementById("buton_ex_locala").innerHTML = '<span class="spinner-grow spinner-grow-sm" id = "loading_circle_local" role="status" aria-hidden="true" ></span> In executie...'
   console.log('The alert mode was :  ' + alert_mode);
   var options = {
     scriptPath : path.join(__dirname, '/../back_end/'),
@@ -14,6 +15,7 @@ function run_local() {
   let pyshell = new PythonShell('local_detection.py', options);
 
   pyshell.end(function (err,code,signal) {
+  document.getElementById("buton_ex_locala").innerHTML = 'Executie locala'
   if (err) throw err;
   console.log('The exit code was: ' + code);
   console.log('The exit signal was: ' + signal);
@@ -25,6 +27,7 @@ function run_local() {
 function run_in_cloud() {
 
   var alert_mode = document.getElementById("alert_checkbox").value
+  document.getElementById("buton_ex_cloud").innerHTML = '<span class="spinner-grow spinner-grow-sm" id = "loading_circle_local" role="status" aria-hidden="true" ></span> In executie...'
 
   var options = {
     scriptPath : path.join(__dirname, '/../back_end/'),
@@ -34,6 +37,7 @@ function run_in_cloud() {
 
   let pyshell = new PythonShell('cloud_detection.py', options);
    pyshell.end(function (err,code,signal) {
+   document.getElementById("buton_ex_cloud").innerHTML = "Executie in cloud"
   if (err) throw err;
   console.log('The exit code was: ' + code);
   console.log('The exit signal was: ' + signal);
