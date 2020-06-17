@@ -1,0 +1,31 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="linkers/anomaly_linker.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Detectarea anomaliilor in video</h1>
+      <p>Aplicatie pentru demonstrarea conceptului</p>
+    </div>
+    <br>
+    <div class = "row" align = "center">
+      <div class="checkbox">
+      <label><input id="alert_checkbox" type="checkbox" >Mod Alerta</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" align="center">
+        <img style="width:40%; padding:5px" src="images/cloud_execution.png"/>
+        <br>
+        <button class="btn btn-info" onclick="run_in_cloud()">Executie in cloud</button>
+      </div>
+      <div class="col-md-6" align="center">
+        <img style="width:40%; padding:5px" src="images/local_execution.png"/>
+        <br>
+        <button class="btn btn-warning" onclick="run_local()">Executie locala</button> </div>
+    </div>
+</div>
+<body>
