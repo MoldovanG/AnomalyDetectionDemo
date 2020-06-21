@@ -1,7 +1,13 @@
+import numpy.distutils as distutils
 
 from anomaly_detection import *
 
-alert_mode = bool(sys.argv[1])
+alert_mode = None
+if sys.argv[1] == 'true':
+    alert_mode = True
+else:
+    alert_mode = False
+
 def run_local(alert_mode = False):
     s3_client = boto3.client("s3")
     frame_predictor = FramePredictor(s3_client)
