@@ -174,7 +174,7 @@ class GradientCalculator:
 
 
 class FramePredictor:
-    threshold = 0
+    threshold = 1
     def __init__(self, s3_client) -> None:
         super().__init__()
         self.s3_client = s3_client
