@@ -13,6 +13,7 @@ def run_in_cloud(alert_mode = False):
     while True:
         for idx in range(7):
             ret, frame = video.read()
+            frame = cv2.resize(frame, (640, 640))
             if ret == 0:
                 break
             frames[idx] = frame
