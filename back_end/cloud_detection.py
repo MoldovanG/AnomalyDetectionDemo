@@ -1,14 +1,16 @@
 from anomaly_detection import *
 
-alert_mode = bool(sys.argv[1])
-
+alert_mode = None
+if sys.argv[1] == 'true':
+    alert_mode = True
+else:
+    alert_mode = False
 def run_in_cloud(alert_mode = False):
     addr = 'http://working-env.eu-west-1.elasticbeanstalk.com/'
     test_url = addr + '/upload'
     s3_client = boto3.client("s3")
     video = cv2.VideoCapture(0)
     frames = [0, 0, 0, 0, 0, 0, 0]
-    frame_scores = []
     start_alert_time = time.time()
     while True:
         for idx in range(7):
@@ -36,13 +38,13 @@ def run_in_cloud(alert_mode = False):
         response = requests.post(test_url + "/" + frame_key)
         end_http_call = time.time()
         json = response.json()
-        frame_scores.append(json['body'])
+        detected_scores = (json['scores'])
         bounding_boxes = json['boxes']
-        scores =[]
+        scores = []
         boxes = []
-        for idx,bounding_box in bounding_boxes:
-            if frame_scores[idx] > FramePredictor.threshold:
-                scores.append(frame_scores[idx])
+        for idx,bounding_box in enumerate(bounding_boxes):
+            if detected_scores[idx] > FramePredictor.threshold:
+                scores.append(detected_scores[idx])
                 c1, l1, c2, l2 = bounding_boxes[idx]
                 boxes.append([c1, l1, c2, l2])
                 end_alert_time = time.time()

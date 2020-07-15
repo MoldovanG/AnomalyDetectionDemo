@@ -155,9 +155,9 @@ class GradientCalculator:
 
     def calculate_gradient(self, image):
         # Get x-gradient in "sx"
-        sx = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=5)
+        sx = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
         # Get y-gradient in "sy"
-        sy = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=5)
+        sy = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
         # Get square root of sum of squares
         sobel = np.hypot(sx, sy)
         sobel = sobel.astype(np.float32)
@@ -212,15 +212,12 @@ def get_feature_vectors_and_bounding_boxes(frame_predictor, frame, frame_d3, fra
     object_detector = ObjectDetector(frame)
     cropped_detections, cropped_d3, cropped_p3 = object_detector.get_detections_and_cropped_sections(frame_d3, frame_p3)
     end_time = time.time()
-    class_ids = object_detector.class_IDs
     gradient_calculator = GradientCalculator()
     gradients_d3 = prepare_data_for_CNN(gradient_calculator.calculate_gradient_bulk(cropped_d3))
     gradients_p3 = prepare_data_for_CNN(gradient_calculator.calculate_gradient_bulk(cropped_p3))
     cropped_detections = prepare_data_for_CNN(cropped_detections)
     list_of_feature_vectors = []
     for i in range(cropped_detections.shape[0]):
-        if class_ids[i] != 'person':
-            continue
         apperance_features = frame_predictor.autoencoder_images.get_encoded_state(
             np.resize(cropped_detections[i], (64, 64, 1)))
         motion_features_d3 = frame_predictor.autoencoder_gradients.get_encoded_state(
